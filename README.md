@@ -20,7 +20,9 @@ Kafka Topic: weather_transformed
 ├── Spark Aggregates (Exercice 5)
 ├── HDFS Storage (Exercice 7)
 └── Real-time Consumers
-📁 Project StructurePlaintextkafka-weather/
+
+📁 Project Structure
+kafka-weather/
 ├── docker-compose.yml          # Kafka + Zookeeper infrastructure
 ├── current_weather.py          # Weather Producer (Ex. 3)
 ├── current_weather_city.py     # City-based Producer (Ex. 6)
@@ -28,9 +30,21 @@ Kafka Topic: weather_transformed
 ├── spark_weather_alerts.py     # Spark Transformation (Ex. 4)
 ├── spark_weather_aggregates.py # Spark Aggregates (Ex. 5)
 ├── kafka_to_hdfs.py           # HDFS Storage (Ex. 7)
-├── hdfs-data/                 # Simulation HDFS
+│
+├── hdfs-data/                 # Simulation HDFS (Data Lake)
 │   └── [country]/[city]/      # Data partitioned by location
-└── README.md                  # Project Documentation
+│
+├── analyze_weather.py          # Data Analysis & Matplotlib (Ex. 8)
+├── create_dw.py                # DW Schema Creation (Ex. 9)
+├── load_dw.py                  # ETL: Data Lake to Warehouse (Ex. 9)
+├── query_dw.py                 # SQL Analytics Queries (Ex. 9)
+├── weather_dw.db               # SQLite Database (Data Warehouse)
+├── dashboard.py                # Streamlit BI Dashboard (Ex. 10)
+│
+├── .gitignore                  # Git exclusion rules
+├── requirements.txt            # Python dependencies
+└── README.md                   # Full Project Documentation (Ex. 11-13)
+
 ```
 
 ## 🚀 Installation & Configuration
@@ -106,6 +120,60 @@ docker ps | findstr kafka
 
 ✅ Saved in JSON-line format compatible with real HDFS clusters.
 
+📈 Exercice 8 : Analyse & Visualisation
+
+✅ Script analyze_weather.py utilisant Pandas et Matplotlib.
+
+✅ Chargement des données depuis le Data Lake (hdfs-data).
+
+✅ Visualisation des tendances de température et distribution des alertes.
+
+🏛️ Exercice 9 : Data Warehouse (Modélisation en Étoile)
+
+✅ Création d'une base analytique weather_dw.db (SQLite).
+
+✅ Schéma en Étoile :
+
+fact_weather (Table de faits)
+
+dim_location & dim_time (Dimensions)
+
+✅ Pipeline ETL pour transformer le JSON brut en données SQL structurées.
+
+🖼️ Exercice 10 : Dashboard Interactif
+
+✅ Interface développée avec Streamlit.
+
+✅ KPIs en temps réel : Température moyenne, vent, compteur d'alertes.
+
+✅ Sélecteurs par Pays/Ville avec graphiques dynamiques.
+
+🛡️ Phase 4 : Industrialisation & Validation (Ex. 11 - 13)
+
+✅ Exercice 11 : Supervision du Pipeline
+
+Monitoring Kafka : Vérification des offsets et du LAG des consommateurs.
+
+Qualité des Données : Validation du schéma JSON et intégrité du Data Lake.
+
+Spark UI : Surveillance des micro-batches et des performances de traitement.
+
+🚀 Exercice 12 : Bonnes Pratiques de Production
+
+Scalabilité : Stratégie de partitionnement Kafka (3-6 partitions en production).
+
+Fiabilité : Concept d'idempotence des producteurs et gestion des duplications.
+
+Sécurité : Introduction théorique à SSL/TLS et SASL pour Kafka.
+
+🏁 Exercice 13 : Synthèse & Soutenance
+
+Vue d'ensemble : Maîtrise du pipeline de bout-en-bout (End-to-End).
+
+Justification technique : Pourquoi avoir choisi Spark (traitement distribué) et Kafka (découplage).
+
+Auto-critique : Identification des limites (simulated HDFS) et axes d'amélioration.
+
 ## 🎯 Alert Rules
 
 ### 🌡️ Temperature Alerts
@@ -175,6 +243,20 @@ python kafka_to_hdfs.py
 
 python consumer.py weather_transformed
 
+- Lancer l'analyse statique (Exercice 8)
+
+python analyze_weather.py
+
+- Préparer le Data Warehouse (Exercice 9)
+
+python create_dw.py
+
+python load_dw.py
+
+- Lancer le Dashboard final (Exercice 10)
+
+streamlit run dashboard.py
+
 
 ### 🔧 Troubleshooting
 
@@ -224,16 +306,3 @@ Transformed Output (weather_transformed)JSON{
 }
 ```
 
-### 🚦 Roadmap
-
-Ex. 8: Log visualization.
-
-Ex. 9: Historical series retrieval.
-
-Ex. 10: Climate record detection.
-
-Ex. 11: Seasonal profiling.
-
-Ex. 12: Data validation & enrichment.
-
-Ex. 13: ML-based Anomaly detection.
